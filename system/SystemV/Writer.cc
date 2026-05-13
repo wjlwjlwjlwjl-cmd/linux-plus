@@ -1,16 +1,18 @@
-#include "Sem.hpp"
+#include "SemV2.hpp"
 #include <ctime>
 
 int main(){
     srand(time(0));
     SemaphoreBuilder sb;
-    auto semp = sb.SetVar(1)->Build(BUILD_FLG);
+    Director d;
+    d.Direct(sb, BUILD_FLG, {0});
     pid_t pid = fork();
     if(pid == 0){
-        auto semc = sb.Build(GET_FLG);
+        d.Direct(sb);
+        auto semc = sb.GetSem();
         int cnt = 30;
         while(cnt--){
-            semc->P();
+            semc->P(0);
             int ms = rand() % 401;
             printf("C");
             fflush(stdout);
@@ -19,13 +21,14 @@ int main(){
             printf("C ");
             fflush(stdout);
             usleep(ms);
-            semc->V();
+            semc->V(0);
         }
         exit(0);
     }
     int cnt = 50;
+    auto semp = sb.GetSem();
     while(cnt--){
-        semp->P();
+        semp->P(0);
         int ms = rand() % 200;
         printf("P");
         fflush(stdout);
@@ -34,7 +37,7 @@ int main(){
         printf("P ");
         fflush(stdout);
         usleep(ms);
-        semp->V();
+        semp->V(0);
     }
     return 0;
 }
