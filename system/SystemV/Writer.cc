@@ -5,7 +5,7 @@ int main(){
     srand(time(0));
     SemaphoreBuilder sb;
     Director d;
-    d.Direct(sb, BUILD_FLG, {0});
+    d.Direct(sb, BUILD_FLG, {1});
     pid_t pid = fork();
     if(pid == 0){
         d.Direct(sb);

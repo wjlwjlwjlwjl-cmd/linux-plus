@@ -18,7 +18,6 @@ public:
         _flag = flag;
     }
     void P(int who) {
-        std::cout << "Product's P" << std::endl;
         struct sembuf sb;
         sb.sem_num = who;
         sb.sem_op = -1;
@@ -30,7 +29,6 @@ public:
         }
     }
     void V(int who) {
-        std::cout << "Product's V" << std::endl;
         struct sembuf sb;
         sb.sem_num = who;
         sb.sem_op = 1;
@@ -99,7 +97,6 @@ public:
             perror("semget fail");
         }
         _semid = semid;
-        std::cout << "Builder finish working" << std::endl;
         return Init();
     }
 private:    
